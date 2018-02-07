@@ -1,11 +1,12 @@
 package com.romanmarkunas.maze;
 
 public class MazeSolver {
-    public String getGreeting() {
-        return "Hello world.";
-    }
 
     public static void main(String[] args) {
-        System.out.println(new MazeSolver().getGreeting());
+        long start = System.currentTimeMillis();
+
+        System.out.println(String.format(
+                "Maze solved in: %s ms",
+                System.currentTimeMillis() - start));
     }
 }
