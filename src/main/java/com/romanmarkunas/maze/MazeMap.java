@@ -43,35 +43,31 @@ public class MazeMap {
         return new Coordinate(this.startX, this.startY);
     }
 
-    public void markVisited(Coordinate coordinate) {
-        this.coordinates[coordinate.getY()][coordinate.getY()] = 2;
-    }
-
-    public boolean wasVisited(Coordinate coordinate) {
-        return this.coordinates[coordinate.getY()][coordinate.getX()] == 2;
-    }
-
     public void printMapWithPath(List<Coordinate> path) {
+        StringBuilder sb = new StringBuilder();
+
         for (int y = 0; y < this.coordinates.length; y++) {
             for (int x = 0; x < this.coordinates[0].length; x++) {
                 if (this.coordinates[y][x] == 1) {
-                    System.out.print("#");
+                    sb.append("#");
                 }
                 else if (y == this.startY && x == this.startX) {
-                    System.out.print("S");
+                    sb.append("S");
                 }
                 else if (y == this.endY && x == this.endX) {
-                    System.out.print("E");
+                    sb.append("E");
                 }
                 else if (path.contains(new Coordinate(x, y))) {
-                    System.out.print("X");
+                    sb.append("X");
                 }
                 else {
-                    System.out.print(" ");
+                    sb.append(" ");
                 }
             }
-            System.out.println("");
+            sb.append("\n");
         }
+
+        System.out.println(sb.toString());
     }
 
 

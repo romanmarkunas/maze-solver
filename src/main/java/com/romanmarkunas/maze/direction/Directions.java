@@ -3,6 +3,7 @@ package com.romanmarkunas.maze.direction;
 import com.romanmarkunas.maze.Coordinate;
 
 import java.util.List;
+import java.util.Random;
 
 import static java.util.Arrays.asList;
 
@@ -54,5 +55,12 @@ public enum Directions implements Direction {
         public Coordinate getCoordinateFrom(Coordinate base) {
             return new Coordinate(base.getX() + 1, base.getY());
         }
+    };
+
+
+    public static Direction random() {
+        Random rn = new Random();
+        Direction[] allDirections = Directions.values();
+        return allDirections[rn.nextInt(allDirections.length)];
     }
 }
