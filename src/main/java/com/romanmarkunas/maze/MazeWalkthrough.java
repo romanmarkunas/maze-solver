@@ -20,9 +20,13 @@ public class MazeWalkthrough {
 
 
     public List<Coordinate> get() {
-        Direction direction = Directions.NORTH;
         Coordinate coordinate = this.map.getStart();
-        InfiniteLoopDetector detector = new InfiniteLoopDetector(3);
+
+        Direction direction = Directions.NORTH;
+        if (coordinate.getY() == 1 || coordinate.getX() == 1) {
+            direction = Directions.SOUTH;
+        }
+
         List<Coordinate> path = new ArrayList<>();
         path.add(coordinate);
 
@@ -39,44 +43,12 @@ public class MazeWalkthrough {
 
             int previousOccurence = path.indexOf(coordinate);
             if (previousOccurence != -1) {
-                List<Coordinate> loop = new ArrayList<>(
-                        path.subList(previousOccurence, path.size()));
-                if (detector.infiniteLoopDetected(loop)) {
-                    direction = Directions.random();
-                }
-
-                path = path.subList(0, previousOccurence);
+                path = new ArrayList<>(path.subList(0, previousOccurence));
             }
 
             path.add(coordinate);
         }
 
         return path;
-    }
-
-
-    private static class InfiniteLoopDetector {
-
-        private final int loopCountThreshold;
-        private int samePathLoopCount = 0;
-        private List<Coordinate> lastLoop = null;
-
-
-        private InfiniteLoopDetector(int loopCountThreshold) {
-            this.loopCountThreshold = loopCountThreshold;
-        }
-
-
-        private boolean infiniteLoopDetected(List<Coordinate> loop) {
-            if (loop.equals(this.lastLoop)) {
-                this.samePathLoopCount++;
-            }
-            else {
-                this.samePathLoopCount = 0;
-                this.lastLoop = loop;
-            }
-
-            return this.samePathLoopCount >= this.loopCountThreshold;
-        }
     }
 }
