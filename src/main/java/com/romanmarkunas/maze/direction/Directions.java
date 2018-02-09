@@ -55,12 +55,5 @@ public enum Directions implements Direction {
         public Coordinate getCoordinateFrom(Coordinate base) {
             return new Coordinate(base.getX() + 1, base.getY());
         }
-    };
-
-
-    public static Direction random() {
-        Random rn = new Random();
-        Direction[] allDirections = Directions.values();
-        return allDirections[rn.nextInt(allDirections.length)];
     }
 }

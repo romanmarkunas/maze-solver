@@ -10,4 +10,8 @@ dependencies {
     testCompile 'junit:junit:4.12'
 }
 
-mainClassName = 'App'
+mainClassName = 'com.romanmarkunas.maze.MazeSolver'
+
+run {
+    args findProperty('args')
+}

@@ -24,11 +24,11 @@ public class Coordinate {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        if (other == null || getClass() != other.getClass()) return false;
 
-        Coordinate that = (Coordinate) o;
+        Coordinate that = (Coordinate) other;
 
         return this.x == that.x && this.y == that.y;
     }

@@ -9,7 +9,7 @@ public class MazeSolver {
         long start = System.currentTimeMillis();
 
         MazeMap map = MazeMap.fromFile(args[0]);
-        List<Coordinate> path = new MazeWalkthrough(map).get();
+        List<Coordinate> path = new MazePath(map).get();
         map.printMapWithPath(path);
 
         System.out.println(String.format(

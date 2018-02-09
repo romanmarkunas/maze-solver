@@ -9,29 +9,25 @@ import java.util.List;
 /**
  * Created by Romans Markuns
  */
-public class MazeWalkthrough {
+public class MazePath {
 
     private final MazeMap map;
 
 
-    public MazeWalkthrough(MazeMap map) {
+    public MazePath(MazeMap map) {
         this.map = map;
     }
 
 
     public List<Coordinate> get() {
         Coordinate coordinate = this.map.getStart();
-
-        Direction direction = Directions.NORTH;
-        if (coordinate.getY() == 1 || coordinate.getX() == 1) {
-            direction = Directions.SOUTH;
-        }
-
+        Direction direction = initalizeDirection(coordinate);
+        int passThroughStart = 0;
         List<Coordinate> path = new ArrayList<>();
         path.add(coordinate);
 
         while (!this.map.isEnd(coordinate)) {
-
+            // calculate next coordinate
             for (Direction dir : direction.getRightHandRuleDirections()) {
                 Coordinate possibleNext = dir.getCoordinateFrom(coordinate);
                 if (!this.map.isWall(possibleNext)) {
@@ -41,14 +37,33 @@ public class MazeWalkthrough {
                 }
             }
 
+            // remove loops
             int previousOccurence = path.indexOf(coordinate);
             if (previousOccurence != -1) {
                 path = new ArrayList<>(path.subList(0, previousOccurence));
             }
 
+            // save next coordinate
             path.add(coordinate);
+
+            // check if maze is solvable
+            if (this.map.getStart().equals(coordinate)) {
+                passThroughStart++;
+                if (passThroughStart > 5) {
+                    throw new RuntimeException("Maze cannot be solved!");
+                }
+            }
         }
 
         return path;
+    }
+
+    private Direction initalizeDirection(Coordinate coordinate) {
+        if (coordinate.getY() == 1 || coordinate.getX() == 1) {
+            return Directions.SOUTH;
+        }
+        else {
+            return Directions.NORTH;
+        }
     }
 }
